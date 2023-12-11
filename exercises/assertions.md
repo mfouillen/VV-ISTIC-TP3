@@ -11,3 +11,19 @@ Answer the following questions:
 4. In JUnit 4, an exception was expected using the `@Test` annotation, while in JUnit 5 there is a special assertion method `assertThrows`. In your opinion, what are the advantages of this new way of checking expected exceptions?
 
 ## Answer
+
+1.
+
+
+2.
+assertEquals check if object are equals by comparating their values, assertSame check if they are the same object object in memory.
+
+```java
+// same result
+assertEquals(1, 1);
+assertSame(1, 1);
+
+// different result
+assertEquals(new ArrayList<String>(), new ArrayList<String>());
+assertSame(new ArrayList<String>(), new ArrayList<String>());
+```

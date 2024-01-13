@@ -26,8 +26,7 @@ class Date implements Comparable<Date> {
             case 12:
                 return day <= 31;
             case 2:
-                boolean isValid = isLeapYear(year) ? day <= 29 : day <= 28;
-                return isValid;
+                return (isLeapYear(year) ? day <= 29 : day <= 28);
             case 4:
             case 6:
             case 9:

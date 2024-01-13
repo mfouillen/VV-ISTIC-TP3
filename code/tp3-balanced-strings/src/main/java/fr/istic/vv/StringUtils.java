@@ -23,9 +23,12 @@ public class StringUtils {
             }
 
             else if(closeSymbols.contains(character)) {
+                if(opened.isEmpty()){
+                    return false;
+                }
+
                 // remove character to opened stack
                 char lastOpened = opened.pop();
-
                 if(openSymbols.indexOf(lastOpened) != closeSymbols.indexOf(character)){
                     return false;
                 }

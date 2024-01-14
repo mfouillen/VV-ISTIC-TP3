@@ -63,22 +63,41 @@ class StringUtilsTest {
         }
 
         @Test
-        public void testCoupleParenthese(){
+        public void testBalancedCoupleParenthese(){
             String testString = "()";
             assertTrue(isBalanced(testString));
         }
 
         @Test
-        public void testCoupleBrackets(){
+        public void testBalancedCoupleBrackets(){
             String testString = "[]";
             assertTrue(isBalanced(testString));
         }
 
         @Test
-        public void testCoupleBraces(){
+        public void testBalancedCoupleBraces(){
             String testString = "{}";
             assertTrue(isBalanced(testString));
         }
+
+        @Test
+        public void testUnbalancedCoupleParenthese(){
+            String testString = ")(";
+            assertFalse(isBalanced(testString));
+        }
+
+        @Test
+        public void testUnbalancedCoupleBrackets(){
+            String testString = "][";
+            assertFalse(isBalanced(testString));
+        }
+
+        @Test
+        public void testUnbalancedCoupleBraces(){
+            String testString = "}{";
+            assertFalse(isBalanced(testString));
+        }
+
 
         @Test
         public void testUnBalancedOpenParethese(){

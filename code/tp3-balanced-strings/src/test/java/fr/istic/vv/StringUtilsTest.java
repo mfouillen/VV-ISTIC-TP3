@@ -135,7 +135,13 @@ class StringUtilsTest {
         }
 
         @Test
-        public void testUnbalancedString(){
+        public void testUnbalancedString1(){
+            String testString = "{)";
+            assertFalse(isBalanced(testString));
+        }
+
+        @Test
+        public void testUnbalancedString2(){
             String testString = "{a(aaa){aaaa]aa}aa";
             assertFalse(isBalanced(testString));
         }

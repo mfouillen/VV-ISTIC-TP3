@@ -1,12 +1,18 @@
 package fr.istic.vv;
 
+import java.io.IOException;
+
 class Date implements Comparable<Date> {
 
     private int day;
     private int month;
     private int year;
 
-    public Date(int day, int month, int year) { 
+    public Date(int day, int month, int year) throws IOException { 
+        if(!isValidDate(day, month, year)) {
+            throw new IOException("Date is not valid");
+        }
+
         this.day = day;
         this.month = month;
         this.year = year;
@@ -30,6 +36,7 @@ class Date implements Comparable<Date> {
             case 4:
             case 6:
             case 9:
+            case 11:
                 return day <= 30;
             default:
                 return false;
@@ -37,30 +44,43 @@ class Date implements Comparable<Date> {
     }
 
     public static boolean isLeapYear(int year) { 
-        return ((year%4 == 0 && year%100 == 0) || year%400 == 0);
+        return ((year%4 == 0 && year%100 != 0) || year%400 == 0);
     }
 
-    public Date nextDate() { 
+    public Date nextDate() throws IOException { 
         if(isValidDate(this.day+1, this.month, this.year)){
             return new Date(this.day+1, this.month, this.year);
         }
-        else if(isValidDate(this.day, this.month+1, this.year)) {
-            return new Date(this.day, this.month+1, this.year);
+        else if(isValidDate(1, this.month+1, this.year)) {
+            return new Date(1, this.month+1, this.year);
         }
         else {
-            return new Date(this.day, this.month, this.year+1);
+            return new Date(1, 1, this.year+1);
         }
      }
 
-    public Date previousDate() {
+    public Date previousDate() throws IOException {
+        
         if(this.day != 1){
             return new Date(this.day-1, this.month, this.year);
         }
         else if(this.month != 1){
-            return new Date(1, this.month-1, this.year);
+            int day = 31;
+            switch (month-1) {
+                case 2:
+                    day = (isLeapYear(year) ? 29 : 28);
+                    break;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    day = 30;
+                    break;
+            }
+            return new Date(day, this.month-1, this.year);
         }
         else {
-            return new Date(1, 1, this.year-1);
+            return new Date(31, 12, this.year-1);
         }
     }
 
@@ -93,4 +113,29 @@ class Date implements Comparable<Date> {
         return 0; 
     }
 
+    @Override
+    public boolean equals(Object obj){
+        if(obj == null) {
+            return false;
+        }
+
+        if(obj.getClass() != this.getClass()){
+            return false;
+        }
+
+        Date other = (Date) obj;
+
+        return (
+            this.day == other.day &&
+            this.month == other.month &&
+            this.year == other.year
+        );
+    }
+
+    @Override
+    public String toString() {
+        return "Date [day=" + day + ", month=" + month + ", year=" + year + "]";
+    }
+
+    
 }
